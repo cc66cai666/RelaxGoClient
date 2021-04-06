@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".main.MainActivity">
+
+    <FrameLayout
+        android:id="@+id/main_frameLayout"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"/>
+
+    <RadioGroup
+        android:id="@+id/main_radioGroup"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:orientation="horizontal">
+
+        <RadioButton
+            android:id="@+id/rbtn_home"
+            style="@style/main_button_theme"
+            android:text="@string/main_home"
+            android:drawableTop="@drawable/main__button_home_selector"
+
+            />
+        <RadioButton
+            android:id="@+id/rbtn_classify"
+            style="@style/main_button_theme"
+            android:text="@string/main_classify"
+            android:drawableTop="@drawable/main_button_classify_selector"/>
+        <RadioButton
+            android:id="@+id/rbtn_cart"
+            style="@style/main_button_theme"
+            android:text="@string/main_cart"
+            android:drawableTop="@drawable/main_button_cart_selector"/>
+        <RadioButton
+            android:id="@+id/rbtn_me"
+            style="@style/main_button_theme"
+            android:text="@string/main_me"
+            android:drawableTop="@drawable/main_button_me_selector"/>
+
+
+    </RadioGroup>
+
+</LinearLayout>

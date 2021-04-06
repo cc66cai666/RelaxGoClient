@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+<!--    登录-->
+    <dimen name="text_size">16sp</dimen>
+
+<!--    首页-->
+    <dimen name="home_child_text_title">18sp</dimen>
+
+</resources>

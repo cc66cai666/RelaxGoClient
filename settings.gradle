@@ -1,0 +1,2 @@
+rootProject.name='RelaxGoClient'
+include ':app'
