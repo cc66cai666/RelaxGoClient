@@ -9,7 +9,9 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:layout_margin="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginBottom="10dp"
         android:background="@drawable/home_prefecture_bg">
 
         <RelativeLayout
@@ -19,8 +21,8 @@
 
             <ImageView
                 android:id="@+id/iv_welfare_icon"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="10dp"
                 android:src="@mipmap/home_child_welfare_icon" />
@@ -40,7 +42,8 @@
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:layout_toLeftOf="@+id/iv_right_icon"
-                android:text="@string/child_text_welfare_tip" />
+                android:text="@string/child_text_welfare_tip"
+                android:textSize="@dimen/home_child_text_title_right"/>
 
             <ImageView
                 android:id="@+id/iv_right_icon"

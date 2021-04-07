@@ -8,7 +8,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -57,6 +59,7 @@ public class ChildWelfareRecyclerAdapter extends RecyclerView.Adapter {
         private TextView tvCommodityDescription;
         private TextView tvPriceNow;
         private TextView tvPriceOld;
+        private LinearLayout commodityOne;
 
         public CommodityViewHolder(@NonNull View itemView, Context context) {
             super(itemView);
@@ -69,6 +72,7 @@ public class ChildWelfareRecyclerAdapter extends RecyclerView.Adapter {
             tvCommodityDescription = (TextView) view.findViewById(R.id.tv_commodity_description);
             tvPriceNow = (TextView) view.findViewById(R.id.tv_price_now);
             tvPriceOld = (TextView) view.findViewById(R.id.tv_price_old);
+            commodityOne = view.findViewById(R.id.ll_commodity_item_one);
         }
 
         public void setData(List<Map<String,String>> mapList,int position) {
@@ -84,6 +88,13 @@ public class ChildWelfareRecyclerAdapter extends RecyclerView.Adapter {
             tvPriceNow.setText(newPrices);
             tvPriceOld.getPaint().setFlags(Paint. STRIKE_THRU_TEXT_FLAG); //中划线
             tvPriceOld.setText(oldPrices);
+
+            commodityOne.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Toast.makeText(mContext,"点击了第"+position+"个",Toast.LENGTH_SHORT).show();
+                }
+            });
 
         }
     }
