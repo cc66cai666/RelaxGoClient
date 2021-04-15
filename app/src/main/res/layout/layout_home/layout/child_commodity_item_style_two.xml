@@ -6,6 +6,7 @@
 
 
     <LinearLayout
+        android:id="@+id/ll_spike_item"
         android:layout_width="match_parent"
         android:orientation="vertical"
         android:gravity="center_horizontal"

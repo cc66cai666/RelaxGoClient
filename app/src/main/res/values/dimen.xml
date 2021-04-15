@@ -10,4 +10,10 @@
     <dimen name="commodity_text_price_size">20sp</dimen>
     <dimen name="commodity_title_child_size">10dp</dimen>
 
+<!--    设置-->
+    <dimen name="set_text_title_size">20sp</dimen>
+    <dimen name="set_text_user_name">18sp</dimen>
+    <dimen name="set_text_user_account">12sp</dimen>
+    <dimen name="set_text_item">16sp</dimen>
+
 </resources>

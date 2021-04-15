@@ -92,10 +92,22 @@ public class ChildWelfareRecyclerAdapter extends RecyclerView.Adapter {
             commodityOne.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Toast.makeText(mContext,"点击了第"+position+"个",Toast.LENGTH_SHORT).show();
+                    if (onWelfareClickListener != null){
+                        onWelfareClickListener.ClickListener(position);
+                    }
                 }
             });
 
         }
+    }
+
+    public interface OnWelfareClickListener{
+        public void ClickListener(int position);
+    }
+
+    private static OnWelfareClickListener onWelfareClickListener;
+
+    public void setOnWelfareClickListener(OnWelfareClickListener onWelfareClickListener) {
+        this.onWelfareClickListener = onWelfareClickListener;
     }
 }

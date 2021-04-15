@@ -10,7 +10,7 @@
         android:layout_width="25dp"
         android:layout_height="25dp"
         android:scaleType="fitXY"
-        android:src="@mipmap/personal_icon_collect"/>
+        android:src="@mipmap/personal_icon_collect_commodity"/>
 
     <TextView
         android:id="@+id/grid_item_title"

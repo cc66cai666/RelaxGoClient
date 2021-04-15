@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -48,12 +49,15 @@ public class ChildSpikeRecyclerAdapter extends RecyclerView.Adapter {
         private Context mContext;
         private ImageView cmtImg;
         private TextView price;
+        private LinearLayout llSpikeItem;
 
         public CommodityViewHolder(@NonNull View itemView,Context context) {
             super(itemView);
             this.mContext = context;
             cmtImg = itemView.findViewById(R.id.iv_commodity);
             price = itemView.findViewById(R.id.tv_commodity_price);
+            llSpikeItem = itemView.findViewById(R.id.ll_spike_item);
+
         }
 
         public void setData(List<Map<String,String>> mapList,int position){
@@ -64,7 +68,24 @@ public class ChildSpikeRecyclerAdapter extends RecyclerView.Adapter {
             Glide.with(mContext).load(imgs).into(cmtImg);
             price.setText(newPrices);
 
-
+            llSpikeItem.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if (onSpikeClickListener != null){
+                        onSpikeClickListener.clickListener(position);
+                    }
+                }
+            });
         }
+    }
+
+    public interface OnSpikeClickListener{
+        public void clickListener(int position);
+    }
+
+    private static OnSpikeClickListener onSpikeClickListener;
+
+    public void setOnSpikeClickListener(OnSpikeClickListener onSpikeClickListener) {
+        this.onSpikeClickListener = onSpikeClickListener;
     }
 }

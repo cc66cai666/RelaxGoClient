@@ -2,7 +2,6 @@ package com.cjh.relaxgo.login.model;
 
 import com.cjh.relaxgo.entity.UmsMember;
 import com.cjh.relaxgo.login.model.bean.LoginResult;
-import com.cjh.relaxgo.login.model.bean.User;
 
 public interface ILogin {
 

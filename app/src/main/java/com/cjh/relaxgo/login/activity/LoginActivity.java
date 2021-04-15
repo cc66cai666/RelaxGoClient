@@ -26,6 +26,7 @@ import com.cjh.relaxgo.entity.UmsMember;
 import com.cjh.relaxgo.login.model.bean.LoginResult;
 import com.cjh.relaxgo.login.presenter.LoginPresenter;
 import com.cjh.relaxgo.login.view.ILoginView;
+import com.cjh.relaxgo.util.AccountSPUtil;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -63,6 +64,8 @@ public class LoginActivity extends BaseActivity implements ILoginView,View.OnCli
 
     private String registerEamil;
     private String registerPsw;
+
+    private static final String SP_USER_NAME = "userName";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -158,6 +161,9 @@ public class LoginActivity extends BaseActivity implements ILoginView,View.OnCli
     public void LoginSuccess(boolean success, LoginResult user) {
         setLog("LoginSuccess: ---------"+user);
         Toast.makeText(LoginActivity.this, "登录成功", Toast.LENGTH_SHORT).show();
+        String username = user.getData().getUsername();
+        Log.i(TAG, "LoginSuccess: 登录者："+username);
+        AccountSPUtil.setString(this,SP_USER_NAME,username);
         this.finish();
     }
 

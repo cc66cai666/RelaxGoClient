@@ -96,13 +96,24 @@ public class ChildRecommendRecyclerAdapter extends RecyclerView.Adapter {
             cv_recommend.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Log.i(TAG, "onClick: ");
-                    Toast.makeText(mContext,"点击了第"+position+"个",Toast.LENGTH_SHORT).show();
+                    if (onRecommendClickListener != null){
+                        onRecommendClickListener.RecommendClickListener(position);
+                    }
                 }
             });
 
 
         }
 
+    }
+
+    public interface OnRecommendClickListener{
+        public void RecommendClickListener(int position);
+    }
+
+    private static OnRecommendClickListener onRecommendClickListener;
+
+    public void setOnRecommendClickListener(OnRecommendClickListener onRecommendClickListener) {
+        this.onRecommendClickListener = onRecommendClickListener;
     }
 }

@@ -1,6 +1,7 @@
 package com.cjh.relaxgo.home.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Canvas;
 import android.graphics.Rect;
 import android.view.LayoutInflater;
@@ -17,6 +18,7 @@ import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
 import com.bumptech.glide.Glide;
 import com.cjh.relaxgo.R;
+import com.cjh.relaxgo.base.CommodityDetailsActivity;
 import com.youth.banner.Banner;
 import com.youth.banner.BannerConfig;
 import com.youth.banner.Transformer;
@@ -125,7 +127,9 @@ public class ChildRecyclerViewAdapter extends RecyclerView.Adapter {
         return currentType;
     }
 
-
+    /**
+     * 推荐专区内部类
+     */
     private class RecommendViewHolder extends RecyclerView.ViewHolder{
         private Context mContext;
         private RecyclerView rvRecommend;
@@ -178,8 +182,14 @@ public class ChildRecyclerViewAdapter extends RecyclerView.Adapter {
                 map.put("oldPrice",oldPrices[i]);
                 mapList.add(map);
             }
-
-            rvRecommend.setAdapter(new ChildRecommendRecyclerAdapter(mContext,mapList));
+            ChildRecommendRecyclerAdapter childRecommendRecyclerAdapter = new ChildRecommendRecyclerAdapter(mContext, mapList);
+            childRecommendRecyclerAdapter.setOnRecommendClickListener(new ChildRecommendRecyclerAdapter.OnRecommendClickListener() {
+                @Override
+                public void RecommendClickListener(int position) {
+                    mContext.startActivity(new Intent(mContext,CommodityDetailsActivity.class));
+                }
+            });
+            rvRecommend.setAdapter(childRecommendRecyclerAdapter);
             rvRecommend.setLayoutManager(new StaggeredGridLayoutManager(2,StaggeredGridLayoutManager.VERTICAL));
             SpacesItemDecoration itemDecoration = new SpacesItemDecoration(35);
             rvRecommend.addItemDecoration(itemDecoration);
@@ -322,7 +332,7 @@ public class ChildRecyclerViewAdapter extends RecyclerView.Adapter {
         private OnBannerListener listener = new OnBannerListener() {
             @Override
             public void OnBannerClick(int position) {
-                Toast.makeText(mContext, "您点击了" + img_title.get(position), Toast.LENGTH_LONG).show();
+                mContext.startActivity(new Intent(mContext,CommodityDetailsActivity.class));
             }
         };
 
@@ -368,8 +378,14 @@ public class ChildRecyclerViewAdapter extends RecyclerView.Adapter {
                 map.put("newPrices", newPrices[i]);
                 mapList.add(map);
             }
-
-            rvSpike.setAdapter(new ChildSpikeRecyclerAdapter(mContext, mapList));
+            ChildSpikeRecyclerAdapter childSpikeRecyclerAdapter = new ChildSpikeRecyclerAdapter(mContext, mapList);
+            childSpikeRecyclerAdapter.setOnSpikeClickListener(new ChildSpikeRecyclerAdapter.OnSpikeClickListener() {
+                @Override
+                public void clickListener(int position) {
+                    mContext.startActivity(new Intent(mContext,CommodityDetailsActivity.class));
+                }
+            });
+            rvSpike.setAdapter(childSpikeRecyclerAdapter);
             rvSpike.setLayoutManager(new LinearLayoutManager(mContext, LinearLayoutManager.HORIZONTAL, false));
 
 
@@ -416,7 +432,14 @@ public class ChildRecyclerViewAdapter extends RecyclerView.Adapter {
             }
 
             welfareRecyclerView.setLayoutManager(new LinearLayoutManager(mContext, LinearLayoutManager.HORIZONTAL, false));
-            welfareRecyclerView.setAdapter(new ChildWelfareRecyclerAdapter(mContext, mapList));
+            ChildWelfareRecyclerAdapter childWelfareRecyclerAdapter = new ChildWelfareRecyclerAdapter(mContext, mapList);
+            childWelfareRecyclerAdapter.setOnWelfareClickListener(new ChildWelfareRecyclerAdapter.OnWelfareClickListener() {
+                @Override
+                public void ClickListener(int position) {
+                    mContext.startActivity(new Intent(mContext, CommodityDetailsActivity.class));
+                }
+            });
+            welfareRecyclerView.setAdapter(childWelfareRecyclerAdapter);
         }
     }
 

@@ -2,6 +2,7 @@ package com.cjh.relaxgo.home.fragment;
 
 
 import android.view.View;
+import android.widget.ImageView;
 
 
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -15,11 +16,12 @@ import com.cjh.relaxgo.home.adapter.ChildRecyclerViewAdapter;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ChildHomeFragment extends BaseFragment {
+public class ChildHomeFragment extends BaseFragment implements View.OnClickListener {
 
     private List<String> img_url;
     private List<String> img_title;
     private RecyclerView recyclerView;
+    private ImageView returnTop;
 
 
     @Override
@@ -44,9 +46,26 @@ public class ChildHomeFragment extends BaseFragment {
         img_title.add("美女4");
         img_title.add("美女5");
 
+        returnTop = view.findViewById(R.id.iv_return_top);
+        returnTop.setOnClickListener(this);
         recyclerView = view.findViewById(R.id.recyclerView);
         recyclerView.setAdapter(new ChildRecyclerViewAdapter(getContext(),img_url,img_title));
-        recyclerView.setLayoutManager(new GridLayoutManager(getContext(),1));
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(), 1);
+        gridLayoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
+            @Override
+            public int getSpanSize(int position) {
+                if (position <= 3){
+                    returnTop.setVisibility(View.GONE);//隐藏
+                }else {
+                    returnTop.setVisibility(View.VISIBLE);//可见
+                }
+                //只能返回1
+                return 1;
+            }
+        });
+        recyclerView.setLayoutManager(gridLayoutManager);
+
+
 
 
     }
@@ -56,4 +75,10 @@ public class ChildHomeFragment extends BaseFragment {
         super.onDestroy();
     }
 
+    @Override
+    public void onClick(View view) {
+        if (view == returnTop){
+            recyclerView.scrollToPosition(0);//回到顶部
+        }
+    }
 }

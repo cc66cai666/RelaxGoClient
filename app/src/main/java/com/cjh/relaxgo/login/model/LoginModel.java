@@ -6,7 +6,6 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.cjh.relaxgo.entity.UmsMember;
 import com.cjh.relaxgo.login.model.bean.LoginResult;
-import com.cjh.relaxgo.login.model.bean.User;
 import com.cjh.relaxgo.util.MyOkHttp;
 import com.cjh.relaxgo.util.MyURL;
 
@@ -29,29 +28,6 @@ public class LoginModel implements ILogin {
 
     String TAG = "LoginModel";
 
-    private String name = "123456";
-    private String password = "123456";
-
-    private Thread mThread = new Thread();
-
-//    @Override
-//    public void request(User user, LoginListener loginListener) {
-//
-//        new Thread(new Runnable() {
-//            @Override
-//            public void run() {
-//
-//                if (name.equals(user.getUserName()) && password.equals(user.getPassword())){
-//                    loginListener.loginSuccess("登录成功");
-//                }else {
-//                    loginListener.loginFails("登录失败：账号或密码错误！");
-//                }
-//
-//            }
-//        }).start();
-//
-//    }
-
     @Override
     public void requestLoginByPsw(String email, String psw, LoginByPswListener loginListener) {
 //        String url =   "http://192.168.10.100:8080/member/login";//邮箱加密码登录验证
@@ -59,51 +35,46 @@ public class LoginModel implements ILogin {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                new Thread(new Runnable() {
+                OkHttpClient client = new OkHttpClient();
+                HashMap<String,String> hashMap = new HashMap<>();
+                hashMap.put("authCode","null");
+                hashMap.put("password",psw);
+                hashMap.put("username",email);
+                String s = JSON.toJSONString(hashMap);
+                Log.i(TAG, "run: "+s);
+                RequestBody body = FormBody.create(MediaType.parse("application/json; charset=utf-8"), s);
+                Log.i(TAG, "run: "+body);
+                Request request = new Request.Builder()
+                        .post(body)
+                        .url(MyURL.LOGIN_BY_EMAIL_PSW)
+                        .build();
+                client.newCall(request).enqueue(new Callback() {
                     @Override
-                    public void run() {
-                        OkHttpClient client = new OkHttpClient();
-                        HashMap<String,String> hashMap = new HashMap<>();
-                        hashMap.put("authCode","null");
-                        hashMap.put("password",psw);
-                        hashMap.put("username",email);
-                        String s = JSON.toJSONString(hashMap);
-                        Log.i(TAG, "run: "+s);
-                        RequestBody body = FormBody.create(MediaType.parse("application/json; charset=utf-8"), s);
-                        Log.i(TAG, "run: "+body);
-                        Request request = new Request.Builder()
-                                .post(body)
-                                .url(MyURL.LOGIN_BY_EMAIL_PSW)
-                                .build();
-                        client.newCall(request).enqueue(new Callback() {
-                            @Override
-                            public void onFailure(@NotNull Call call, @NotNull IOException e) {
-                                Log.i(TAG, "onFailure: 请求失败！");
-                                loginListener.loginByAccountFails(false,"登录失败，请检查网络是否正常！");
-                            }
-
-                            @Override
-                            public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
-                                String content = response.body().string();
-                                Log.i(TAG, "onResponse: 请求成功--------"+content);
-                                response.code();
-                                if (content != null){
-                                    LoginResult loginResult = JSON.parseObject(content, LoginResult.class);
-                                    String code = loginResult.getCode();
-                                    if (code.equals("200")){
-                                        loginListener.loginByAccountSuccess(true,loginResult);
-                                    }else if (code.equals("404")){
-                                        loginListener.loginByAccountFails(false,"验证码错误！");
-                                    }else if (code.equals("500")){
-                                        loginListener.loginByAccountFails(false,"账号不存在！");
-                                    }
-                                }else {
-                                    Log.i(TAG, "onResponse: 请求信息为空！");
-                                }
-                            }
-                        });
+                    public void onFailure(@NotNull Call call, @NotNull IOException e) {
+                        Log.i(TAG, "onFailure: 请求失败！");
+                        loginListener.loginByAccountFails(false,"登录失败，请检查网络是否正常！");
                     }
-                }).start();
+
+                    @Override
+                    public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
+                        String content = response.body().string();
+                        Log.i(TAG, "onResponse: 请求成功--------"+content);
+                        response.code();
+                        if (content != null){
+                            LoginResult loginResult = JSON.parseObject(content, LoginResult.class);
+                            String code = loginResult.getCode();
+                            if (code.equals("200")){
+                                loginListener.loginByAccountSuccess(true,loginResult);
+                            }else if (code.equals("404")){
+                                loginListener.loginByAccountFails(false,"验证码错误！");
+                            }else if (code.equals("500")){
+                                loginListener.loginByAccountFails(false,"账号不存在！");
+                            }
+                        }else {
+                            Log.i(TAG, "onResponse: 请求信息为空！");
+                        }
+                    }
+                });
             }
         }).start();
     }
